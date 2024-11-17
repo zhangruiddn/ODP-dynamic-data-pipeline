@@ -1,29 +1,42 @@
-from kafka import KafkaAdminClient, KafkaProducer
+import os
+import yaml
+from data_processor import DataProcessor
+from batch_tlb import BatchTLB
 
-from src.partition_processor import PartitionProcessor
-from src.setup import setup_kafka_topics
+
+# Load the pipeline configuration
+def load_config(config_path):
+    with open(config_path, 'r') as f:
+        return yaml.safe_load(f)
 
 
-def start_pipeline(config):
-    # Initialize Kafka Admin client
-    kafka_admin = KafkaAdminClient(bootstrap_servers=['localhost:9092'])
-    setup_kafka_topics(config, kafka_admin)
-    
-    # Initialize Kafka Producer
-    kafka_producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
+# Test the pipeline stages
+def test_pipeline(config_path, hour):
+    # Load configuration
+    config = load_config(config_path)
+    processor = DataProcessor(config)
 
-    # Process each stage based on configuration
-    stages = config['stages']
-    processors = []
-    for stage_config in stages:
-        processor = PartitionProcessor(stage_config, kafka_producer)
-        processors.append(processor)
-    
-    # Simulate receiving and processing messages (actual implementation would consume from Kafka)
-    for processor in processors:
-        # In reality, you would consume messages from Kafka, process, and then publish to the next topic
-        print(f"Processing stage: {processor.output_topic}")
+    # Process each stage sequentially
+    for stage_name in config['stages']:
+        print(f"Running {stage_name}...")
+        processor.process_stage(stage_name, hour)
 
-# Load config and start pipeline
-config = load_config('pipeline_config.yaml')
-start_pipeline(config)
+    # Run the Batch TLB task
+    print("Running Batch TLB...")
+    user_exp_file = f"../data/user_experience/{hour}.json"
+    trace_file = f"../output/trace_processed/{hour}.json"
+    log_file = f"../output/log_processed/{hour}.json"
+    output_file = f"../output/tlb_metrics/{hour}.json"
+
+    os.makedirs(os.path.dirname(output_file), exist_ok=True)
+    batch_tlb = BatchTLB(user_exp_file, trace_file, log_file)
+    batch_tlb.compute_metrics(output_file)
+    print(f"Batch TLB metrics written to: {output_file}")
+
+
+if __name__ == "__main__":
+    # Path to the pipeline configuration file
+    config_path = "../pipelines/observability_correlation_pipeline.yaml"
+    hour = "2024111612"
+
+    test_pipeline(config_path, hour)

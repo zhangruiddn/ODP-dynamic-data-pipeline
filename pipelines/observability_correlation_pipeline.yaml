@@ -4,14 +4,14 @@ stages:
     description: "Process user experience data"
     input:
       type: "local_file"
-      file_path: "./data/user_experience/{hour}.json"
+      file_path: "../data/user_exp_{hour}.json"
     redis_mappings:
       write:
         redis_key_prefix: "trace_to_client"
         from_fields:
           key: "traceId"
           value: "clientId"
-    output_file: "./output/user_experience_processed/{hour}.json"
+    output_file: "../output/user_exp_processed_{hour}.json"
 
   stage_2:
     description: "Enhance trace data"
@@ -25,9 +25,9 @@ stages:
       write:
         redis_key_prefix: "span_to_trace_client"
         from_fields:
-          key: "spanId"
+          key: "spans.spanId"
           value: ["traceId", "clientId"]
-    output_file: "./output/trace_processed/{hour}.json"
+    output_file: "../output/trace_processed_{hour}.json"
 
   stage_3:
     description: "Enhance log data"
@@ -38,4 +38,4 @@ stages:
     redis_mappings:
       read:
         redis_key_prefix: "span_to_trace_client"
-    output_file: "./output/log_processed/{hour}.json"
+    output_file: "../output/log_processed_{hour}.json"

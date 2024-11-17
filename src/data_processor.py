@@ -1,5 +1,7 @@
 import os
 import json
+import subprocess
+
 import boto3
 import redis
 
@@ -17,6 +19,7 @@ class DataProcessor:
 
         # Read input data
         data = self._read_input(stage['input'], hour)
+        print(data)
 
         # Handle Redis mappings
         if 'read' in stage['redis_mappings']:
@@ -52,9 +55,37 @@ class DataProcessor:
 
     def _download_from_s3(self, bucket, prefix):
         print(f"Downloading files from S3: bucket={bucket}, prefix={prefix}")
-        # Placeholder logic for S3 download
-        self.s3_client.download
-        return []
+        # We have some credential issues reading from s3. Instead, we curl the file content
+        try:
+            # Construct the curl command
+            # TODO: add s3 get object support based on bucket and prefix
+            base_url = "https://2024-hackathon-odp-data-plane.s3.amazonaws.com/"
+            file_name = "sample_trace/trace_2024111612.json" if "trace" in prefix else "sample_log/log_2024111612.json"
+            url = base_url + file_name
+            curl_command = [
+                "curl",
+                "-s",  # Silent mode to suppress progress bar
+                "-L",  # Follow redirects
+                url
+            ]
+
+            # Execute the curl command
+            result = subprocess.run(curl_command, capture_output=True, text=True)
+
+            # Check for errors
+            if result.returncode != 0:
+                raise RuntimeError(f"Curl command failed: {result.stderr}")
+
+            # Parse the JSON content
+            content = result.stdout
+            json_data = json.loads(content)
+            return json_data
+
+        except json.JSONDecodeError:
+            raise ValueError("Failed to decode JSON content")
+        except Exception as e:
+            print(f"Error downloading JSON: {e}")
+            return None
 
     def _read_redis_mappings(self, key_prefix):
         print(f"Reading mappings from Redis with prefix: {key_prefix}")
@@ -75,10 +106,63 @@ class DataProcessor:
                     item.update(json.loads(mapping))
 
     def _extract_mappings(self, data, from_fields):
+        """
+        Extracts mappings based on the specified 'key' and 'value' fields.
+
+        Args:
+            data (list): List of records to process.
+            from_fields (dict): Configuration specifying 'key' and 'value' fields.
+
+        Returns:
+            dict: Mappings extracted based on the configuration.
+        """
         print(f"Extracting mappings based on fields: {from_fields}")
         mappings = {}
+
         for item in data:
-            key = item[from_fields['key']]
-            value = {field: item[field] for field in from_fields['value']}
-            mappings[key] = value
+            # Extract the key (could be a list for nested fields like spans)
+            keys = self._get_nested_field(item, from_fields['key'])
+
+            # Ensure keys is a list for consistency
+            if not isinstance(keys, list):
+                keys = [keys]
+
+            # Extract the value(s) for each key
+            for key in keys:
+                if not key:  # Skip if key is None or invalid
+                    continue
+
+                if isinstance(from_fields['value'], list):
+                    # Extract multiple fields for the value
+                    values = {field: self._get_nested_field(item, field) for field in from_fields['value']}
+                else:
+                    # Extract a single field for the value
+                    values = self._get_nested_field(item, from_fields['value'])
+
+                if values:  # Ensure valid values before adding
+                    mappings[key] = values
+
         return mappings
+
+    def _get_nested_field(self, record, field_path):
+        """
+        Retrieves the value of a potentially nested field from a record.
+
+        Args:
+            record (dict): The record from which to extract the field.
+            field_path (str): Dot-separated path to the field (e.g., 'spans.spanId').
+
+        Returns:
+            The value of the nested field, or None if the field does not exist.
+        """
+        fields = field_path.split('.')
+        current = record
+        for field in fields:
+            if isinstance(current, list):
+                # If current is a list, recursively extract for each element
+                return [self._get_nested_field(item, '.'.join(fields[1:])) for item in current]
+            elif isinstance(current, dict) and field in current:
+                current = current[field]
+            else:
+                return None
+        return current

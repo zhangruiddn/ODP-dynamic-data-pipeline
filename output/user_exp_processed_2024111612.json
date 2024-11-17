@@ -1,0 +1,124 @@
+[
+  {
+    "eventId": "event1",
+    "clientId": "client1",
+    "traceId": "trace1",
+    "timestamp": "2024-11-16T12:00:05Z",
+    "page": "/home",
+    "eventType": "page_view_start"
+  },
+  {
+    "eventId": "event2",
+    "clientId": "client2",
+    "traceId": "trace2",
+    "timestamp": "2024-11-16T12:00:10Z",
+    "page": "/login",
+    "eventType": "page_view_start"
+  },
+  {
+    "eventId": "event3",
+    "clientId": "client3",
+    "traceId": "trace3",
+    "timestamp": "2024-11-16T12:00:15Z",
+    "page": "/home",
+    "eventType": "page_view_start"
+  },
+  {
+    "eventId": "event4",
+    "clientId": "client1",
+    "traceId": "trace4",
+    "timestamp": "2024-11-16T12:01:05Z",
+    "page": "/home",
+    "eventType": "page_view_end"
+  },
+  {
+    "eventId": "event5",
+    "clientId": "client2",
+    "traceId": "trace5",
+    "timestamp": "2024-11-16T12:01:20Z",
+    "page": "/login",
+    "eventType": "error",
+    "errorCode": "401",
+    "errorMessage": "Unauthorized access"
+  },
+  {
+    "eventId": "event6",
+    "clientId": "client3",
+    "traceId": "trace6",
+    "timestamp": "2024-11-16T12:01:30Z",
+    "page": "/profile",
+    "eventType": "page_view_start"
+  },
+  {
+    "eventId": "event7",
+    "clientId": "client1",
+    "traceId": "trace7",
+    "timestamp": "2024-11-16T12:02:00Z",
+    "page": "/settings",
+    "eventType": "page_view_start"
+  },
+  {
+    "eventId": "event8",
+    "clientId": "client2",
+    "traceId": "trace8",
+    "timestamp": "2024-11-16T12:02:15Z",
+    "page": "/home",
+    "eventType": "page_view_start"
+  },
+  {
+    "eventId": "event9",
+    "clientId": "client3",
+    "traceId": "trace9",
+    "timestamp": "2024-11-16T12:02:30Z",
+    "page": "/profile",
+    "eventType": "page_view_end"
+  },
+  {
+    "eventId": "event10",
+    "clientId": "client1",
+    "traceId": "trace10",
+    "timestamp": "2024-11-16T12:03:00Z",
+    "page": "/settings",
+    "eventType": "page_view_end"
+  },
+  {
+    "eventId": "event11",
+    "clientId": "client2",
+    "traceId": "trace11",
+    "timestamp": "2024-11-16T12:03:20Z",
+    "page": "/profile",
+    "eventType": "page_view_start"
+  },
+  {
+    "eventId": "event12",
+    "clientId": "client3",
+    "traceId": "trace12",
+    "timestamp": "2024-11-16T12:03:45Z",
+    "page": "/login",
+    "eventType": "page_view_start"
+  },
+  {
+    "eventId": "event13",
+    "clientId": "client1",
+    "traceId": "trace13",
+    "timestamp": "2024-11-16T12:04:05Z",
+    "page": "/profile",
+    "eventType": "page_view_start"
+  },
+  {
+    "eventId": "event14",
+    "clientId": "client2",
+    "traceId": "trace14",
+    "timestamp": "2024-11-16T12:04:30Z",
+    "page": "/settings",
+    "eventType": "page_view_start"
+  },
+  {
+    "eventId": "event15",
+    "clientId": "client3",
+    "traceId": "trace15",
+    "timestamp": "2024-11-16T12:04:50Z",
+    "page": "/login",
+    "eventType": "page_view_end"
+  }
+]

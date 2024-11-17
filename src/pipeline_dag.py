@@ -42,12 +42,12 @@ processor = DataProcessor(config)
 
 # Airflow task for each stage
 def run_stage(stage_name, hour, **kwargs):
-    print(stage_name + ": " + hour)
-    # processor.process_stage(stage_name, hour)
+    processor.process_stage(stage_name, hour)
 
 
 # Task for computing metrics
 def compute_metrics(hour, **kwargs):
+    # These paths should be read from the pipeline config
     user_exp_file = f"../data/user_experience/{hour}.json"
     trace_file = f"../output/trace_processed/{hour}.json"
     log_file = f"../output/log_processed/{hour}.json"
