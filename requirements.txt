@@ -1,0 +1,15 @@
+# Airflow Core
+apache-airflow==2.7.2
+
+# Amazon Providers for S3KeySensor
+apache-airflow-providers-amazon==9.1.0rc4
+
+# Redis support for Redis interactions
+redis==5.0.0
+
+# Boto3 for S3 interaction
+boto3==1.28.57
+
+# PyYAML for configuration parsing
+pyyaml==6.0
+

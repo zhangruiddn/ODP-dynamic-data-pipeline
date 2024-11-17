@@ -1,0 +1,61 @@
+[
+    {"traceId": "trace1", "spans": [
+        {"spanId": "span1", "server": "web-server-1", "log": "Page requested"},
+        {"spanId": "span2", "server": "db-server-1", "log": "DB query executed"},
+        {"spanId": "span3", "server": "cache-server-1", "log": "Cache hit"}
+    ]},
+    {"traceId": "trace2", "spans": [
+        {"spanId": "span4", "server": "web-server-2", "log": "Login page loaded"},
+        {"spanId": "span5", "server": "auth-server-1", "log": "Authentication request received"},
+        {"spanId": "span6", "server": "db-server-2", "log": "User record not found"}
+    ]},
+    {"traceId": "trace3", "spans": [
+        {"spanId": "span7", "server": "web-server-1", "log": "Page requested"},
+        {"spanId": "span8", "server": "cache-server-2", "log": "Cache miss"}
+    ]},
+    {"traceId": "trace4", "spans": [
+        {"spanId": "span9", "server": "web-server-1", "log": "Page loaded"},
+        {"spanId": "span10", "server": "cdn-server-1", "log": "Static assets served"}
+    ]},
+    {"traceId": "trace5", "spans": [
+        {"spanId": "span11", "server": "auth-server-1", "log": "Unauthorized access logged"}
+    ]},
+    {"traceId": "trace6", "spans": [
+        {"spanId": "span12", "server": "web-server-2", "log": "Profile page loaded"},
+        {"spanId": "span13", "server": "db-server-3", "log": "User details fetched"}
+    ]},
+    {"traceId": "trace7", "spans": [
+        {"spanId": "span14", "server": "web-server-3", "log": "Settings page loaded"}
+    ]},
+    {"traceId": "trace8", "spans": [
+        {"spanId": "span15", "server": "web-server-1", "log": "Page requested"},
+        {"spanId": "span16", "server": "cache-server-1", "log": "Cache hit"}
+    ]},
+    {"traceId": "trace9", "spans": [
+        {"spanId": "span17", "server": "db-server-2", "log": "Profile data fetched"},
+        {"spanId": "span18", "server": "cdn-server-2", "log": "Assets served"}
+    ]},
+    {"traceId": "trace10", "spans": [
+        {"spanId": "span19", "server": "web-server-3", "log": "Settings updated"},
+        {"spanId": "span20", "server": "notification-server-1", "log": "Notification sent"}
+    ]},
+    {"traceId": "trace11", "spans": [
+        {"spanId": "span21", "server": "web-server-2", "log": "Profile page viewed"},
+        {"spanId": "span22", "server": "analytics-server-1", "log": "Event logged"}
+    ]},
+    {"traceId": "trace12", "spans": [
+        {"spanId": "span23", "server": "auth-server-2", "log": "Login attempt"},
+        {"spanId": "span24", "server": "db-server-1", "log": "Credentials validated"}
+    ]},
+    {"traceId": "trace13", "spans": [
+        {"spanId": "span25", "server": "web-server-1", "log": "Profile page loaded"}
+    ]},
+    {"traceId": "trace14", "spans": [
+        {"spanId": "span26", "server": "web-server-3", "log": "Settings page accessed"},
+        {"spanId": "span27", "server": "cdn-server-1", "log": "Assets loaded"}
+    ]},
+    {"traceId": "trace15", "spans": [
+        {"spanId": "span28", "server": "auth-server-2", "log": "Login success"},
+        {"spanId": "span29", "server": "notification-server-1", "log": "Welcome email sent"}
+    ]}
+]

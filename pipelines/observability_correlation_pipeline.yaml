@@ -1,0 +1,41 @@
+pipeline_name: "observability_correlation_pipeline"
+stages:
+  stage_1:
+    description: "Process user experience data"
+    input:
+      type: "local_file"
+      file_path: "./data/user_experience/{hour}.json"
+    redis_mappings:
+      write:
+        redis_key_prefix: "trace_to_client"
+        from_fields:
+          key: "traceId"
+          value: "clientId"
+    output_file: "./output/user_experience_processed/{hour}.json"
+
+  stage_2:
+    description: "Enhance trace data"
+    input:
+      type: "s3"
+      bucket: "demo-trace-bucket"
+      prefix: "traces/{hour}/"
+    redis_mappings:
+      read:
+        redis_key_prefix: "trace_to_client"
+      write:
+        redis_key_prefix: "span_to_trace_client"
+        from_fields:
+          key: "spanId"
+          value: ["traceId", "clientId"]
+    output_file: "./output/trace_processed/{hour}.json"
+
+  stage_3:
+    description: "Enhance log data"
+    input:
+      type: "s3"
+      bucket: "demo-log-bucket"
+      prefix: "logs/{hour}/"
+    redis_mappings:
+      read:
+        redis_key_prefix: "span_to_trace_client"
+    output_file: "./output/log_processed/{hour}.json"
