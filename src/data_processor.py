@@ -53,6 +53,7 @@ class DataProcessor:
     def _download_from_s3(self, bucket, prefix):
         print(f"Downloading files from S3: bucket={bucket}, prefix={prefix}")
         # Placeholder logic for S3 download
+        self.s3_client.download
         return []
 
     def _read_redis_mappings(self, key_prefix):
