@@ -77,7 +77,9 @@ class BatchTLB:
                                     client_metrics[client_id]["error_count"] += 1
 
         # Write the result to the output file
-        with open(self.output_file, 'w') as f:
-            json.dump(client_metrics, f, indent=2)
+        # with open(self.output_file, 'w') as f:
+        #     json.dump(client_metrics, f, indent=2)
 
-        print(f"Metrics computation completed. Output written to {self.output_file}")
+        # print(f"Metrics computation completed. Output written to {self.output_file}")
+
+        print(f"Metrics computation completed:\n{json.dumps(client_metrics, indent=2)}")

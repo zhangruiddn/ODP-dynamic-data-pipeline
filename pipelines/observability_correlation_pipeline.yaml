@@ -4,14 +4,15 @@ stages:
     description: "Process user experience data"
     input:
       type: "local_file"
-      file_path: "../data/user_exp_{hour}.json"
+      # TODO: set env variable for base path
+      file_path: "/Users/rzhang/git/ODP-dynamic-data-pipeline/data/user_exp_{hour}.json"
     redis_mappings:
       write:
         redis_key_prefix: "trace_to_client"
         from_fields:
           key: "traceId"
           value: "clientId"
-    output_file: "../output/user_exp_processed_{hour}.json"
+    output_file: "/Users/rzhang/git/ODP-dynamic-data-pipeline/output/user_exp_processed_{hour}.json"
 
   stage_2:
     description: "Enhance trace data"
@@ -28,7 +29,7 @@ stages:
         from_fields:
           key: "spans.spanId"
           value: ["traceId", "clientId"]
-    output_file: "../output/trace_processed_{hour}.json"
+    output_file: "/Users/rzhang/git/ODP-dynamic-data-pipeline/output/trace_processed_{hour}.json"
 
   stage_3:
     description: "Enhance log data"
@@ -40,4 +41,4 @@ stages:
       read:
         redis_key_prefix: "span_to_trace_client"
         key_field: "spanId"
-    output_file: "../output/log_processed_{hour}.json"
+    output_file: "/Users/rzhang/git/ODP-dynamic-data-pipeline/output/log_processed_{hour}.json"
