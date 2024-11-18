@@ -22,6 +22,7 @@ stages:
     redis_mappings:
       read:
         redis_key_prefix: "trace_to_client"
+        key_field: "traceId"
       write:
         redis_key_prefix: "span_to_trace_client"
         from_fields:
@@ -38,4 +39,5 @@ stages:
     redis_mappings:
       read:
         redis_key_prefix: "span_to_trace_client"
+        key_field: "spanId"
     output_file: "../output/log_processed_{hour}.json"

@@ -17,7 +17,8 @@
         "server": "cache-server-1",
         "log": "Cache hit"
       }
-    ]
+    ],
+    "clientId": "client1"
   },
   {
     "traceId": "trace2",
@@ -37,7 +38,8 @@
         "server": "db-server-2",
         "log": "User record not found"
       }
-    ]
+    ],
+    "clientId": "client2"
   },
   {
     "traceId": "trace3",
@@ -52,7 +54,8 @@
         "server": "cache-server-2",
         "log": "Cache miss"
       }
-    ]
+    ],
+    "clientId": "client3"
   },
   {
     "traceId": "trace4",
@@ -67,7 +70,8 @@
         "server": "cdn-server-1",
         "log": "Static assets served"
       }
-    ]
+    ],
+    "clientId": "client1"
   },
   {
     "traceId": "trace5",
@@ -77,7 +81,8 @@
         "server": "auth-server-1",
         "log": "Unauthorized access logged"
       }
-    ]
+    ],
+    "clientId": "client2"
   },
   {
     "traceId": "trace6",
@@ -92,7 +97,8 @@
         "server": "db-server-3",
         "log": "User details fetched"
       }
-    ]
+    ],
+    "clientId": "client3"
   },
   {
     "traceId": "trace7",
@@ -102,7 +108,8 @@
         "server": "web-server-3",
         "log": "Settings page loaded"
       }
-    ]
+    ],
+    "clientId": "client1"
   },
   {
     "traceId": "trace8",
@@ -117,7 +124,8 @@
         "server": "cache-server-1",
         "log": "Cache hit"
       }
-    ]
+    ],
+    "clientId": "client2"
   },
   {
     "traceId": "trace9",
@@ -132,7 +140,8 @@
         "server": "cdn-server-2",
         "log": "Assets served"
       }
-    ]
+    ],
+    "clientId": "client3"
   },
   {
     "traceId": "trace10",
@@ -147,7 +156,8 @@
         "server": "notification-server-1",
         "log": "Notification sent"
       }
-    ]
+    ],
+    "clientId": "client1"
   },
   {
     "traceId": "trace11",
@@ -162,7 +172,8 @@
         "server": "analytics-server-1",
         "log": "Event logged"
       }
-    ]
+    ],
+    "clientId": "client2"
   },
   {
     "traceId": "trace12",
@@ -177,7 +188,8 @@
         "server": "db-server-1",
         "log": "Credentials validated"
       }
-    ]
+    ],
+    "clientId": "client3"
   },
   {
     "traceId": "trace13",
@@ -187,7 +199,8 @@
         "server": "web-server-1",
         "log": "Profile page loaded"
       }
-    ]
+    ],
+    "clientId": "client1"
   },
   {
     "traceId": "trace14",
@@ -202,7 +215,8 @@
         "server": "cdn-server-1",
         "log": "Assets loaded"
       }
-    ]
+    ],
+    "clientId": "client2"
   },
   {
     "traceId": "trace15",
@@ -217,6 +231,7 @@
         "server": "notification-server-1",
         "log": "Welcome email sent"
       }
-    ]
+    ],
+    "clientId": "client3"
   }
 ]

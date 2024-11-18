@@ -19,13 +19,14 @@ class DataProcessor:
 
         # Read input data
         data = self._read_input(stage['input'], hour)
-        print(data)
 
         # Handle Redis mappings
         if 'read' in stage['redis_mappings']:
             read_key_prefix = stage['redis_mappings']['read']['redis_key_prefix']
             mappings = self._read_redis_mappings(read_key_prefix)
-            self._enhance_data_with_mappings(data, mappings)
+            mapping_key_field = stage['redis_mappings']['read'].get('key_field')
+            print("mappings is ", mappings)
+            self._enhance_data_with_mappings(data, mappings, mapping_key_field)
 
         if 'write' in stage['redis_mappings']:
             write_key_prefix = stage['redis_mappings']['write']['redis_key_prefix']
@@ -55,7 +56,7 @@ class DataProcessor:
 
     def _download_from_s3(self, bucket, prefix):
         print(f"Downloading files from S3: bucket={bucket}, prefix={prefix}")
-        # We have some credential issues reading from s3. Instead, we curl the file content
+        # We have some credential issues reading from s3. Instead of using s3 client, we curl the file content
         try:
             # Construct the curl command
             # TODO: add s3 get object support based on bucket and prefix
@@ -97,13 +98,19 @@ class DataProcessor:
             redis_key = f"{key_prefix}:{key}"
             self.redis_client.set(redis_key, json.dumps(value))
 
-    def _enhance_data_with_mappings(self, data, mappings):
+    def _enhance_data_with_mappings(self, data, mappings, mapping_key_field):
         print("Enhancing data with Redis mappings...")
         for item in data:
-            if 'spanId' in item:
-                mapping = mappings.get(item['spanId'])
-                if mapping:
-                    item.update(json.loads(mapping))
+            # Get the mapping key from the record
+            mapping_key = item.get(mapping_key_field)
+            if not mapping_key:
+                print(f"Skipping record without key field: {mapping_key_field}")
+                continue
+
+            mapping = mappings.get(mapping_key)
+            if mapping:
+                # Merge the Redis mapping values into the record
+                item.update(json.loads(mapping))
 
     def _extract_mappings(self, data, from_fields):
         """
@@ -136,8 +143,12 @@ class DataProcessor:
                     # Extract multiple fields for the value
                     values = {field: self._get_nested_field(item, field) for field in from_fields['value']}
                 else:
-                    # Extract a single field for the value
-                    values = self._get_nested_field(item, from_fields['value'])
+                    # Extract a single field for the value and wrap it into a dictionary
+                    single_value = self._get_nested_field(item, from_fields['value'])
+                    if single_value is not None:
+                        values = {from_fields['value']: single_value}
+                    else:
+                        continue
 
                 if values:  # Ensure valid values before adding
                     mappings[key] = values

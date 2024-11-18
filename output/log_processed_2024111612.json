@@ -8,7 +8,7 @@
     "processingTimeMs": 50,
     "eventType": "INFO",
     "traceId": "trace1",
-    "clientId": null
+    "clientId": "client1"
   },
   {
     "logId": "log2",
@@ -19,7 +19,7 @@
     "processingTimeMs": 100,
     "eventType": "INFO",
     "traceId": "trace1",
-    "clientId": null
+    "clientId": "client1"
   },
   {
     "logId": "log3",
@@ -30,7 +30,7 @@
     "processingTimeMs": 30,
     "eventType": "SUCCESS",
     "traceId": "trace1",
-    "clientId": null
+    "clientId": "client1"
   },
   {
     "logId": "log4",
@@ -41,7 +41,7 @@
     "processingTimeMs": 90,
     "eventType": "INFO",
     "traceId": "trace2",
-    "clientId": null
+    "clientId": "client2"
   },
   {
     "logId": "log5",
@@ -52,7 +52,7 @@
     "processingTimeMs": 50,
     "eventType": "INFO",
     "traceId": "trace2",
-    "clientId": null
+    "clientId": "client2"
   },
   {
     "logId": "log6",
@@ -63,7 +63,7 @@
     "processingTimeMs": 200,
     "eventType": "TIMEOUT",
     "traceId": "trace2",
-    "clientId": null
+    "clientId": "client2"
   },
   {
     "logId": "log7",
@@ -74,7 +74,7 @@
     "processingTimeMs": 40,
     "eventType": "INFO",
     "traceId": "trace3",
-    "clientId": null
+    "clientId": "client3"
   },
   {
     "logId": "log8",
@@ -85,7 +85,7 @@
     "processingTimeMs": 60,
     "eventType": "RETRY",
     "traceId": "trace3",
-    "clientId": null
+    "clientId": "client3"
   },
   {
     "logId": "log9",
@@ -96,7 +96,7 @@
     "processingTimeMs": 120,
     "eventType": "SUCCESS",
     "traceId": "trace4",
-    "clientId": null
+    "clientId": "client1"
   },
   {
     "logId": "log10",
@@ -107,7 +107,7 @@
     "processingTimeMs": 70,
     "eventType": "INFO",
     "traceId": "trace4",
-    "clientId": null
+    "clientId": "client1"
   },
   {
     "logId": "log11",
@@ -118,7 +118,7 @@
     "processingTimeMs": 30,
     "eventType": "ERROR",
     "traceId": "trace5",
-    "clientId": null
+    "clientId": "client2"
   },
   {
     "logId": "log12",
@@ -129,7 +129,7 @@
     "processingTimeMs": 150,
     "eventType": "INFO",
     "traceId": "trace6",
-    "clientId": null
+    "clientId": "client3"
   },
   {
     "logId": "log13",
@@ -140,7 +140,7 @@
     "processingTimeMs": 90,
     "eventType": "SUCCESS",
     "traceId": "trace6",
-    "clientId": null
+    "clientId": "client3"
   },
   {
     "logId": "log14",
@@ -151,7 +151,7 @@
     "processingTimeMs": 60,
     "eventType": "INFO",
     "traceId": "trace7",
-    "clientId": null
+    "clientId": "client1"
   },
   {
     "logId": "log15",
@@ -162,7 +162,7 @@
     "processingTimeMs": 50,
     "eventType": "INFO",
     "traceId": "trace8",
-    "clientId": null
+    "clientId": "client2"
   },
   {
     "logId": "log16",
@@ -173,7 +173,7 @@
     "processingTimeMs": 30,
     "eventType": "SUCCESS",
     "traceId": "trace8",
-    "clientId": null
+    "clientId": "client2"
   },
   {
     "logId": "log17",
@@ -184,7 +184,7 @@
     "processingTimeMs": 100,
     "eventType": "SUCCESS",
     "traceId": "trace9",
-    "clientId": null
+    "clientId": "client3"
   },
   {
     "logId": "log18",
@@ -195,7 +195,7 @@
     "processingTimeMs": 40,
     "eventType": "INFO",
     "traceId": "trace9",
-    "clientId": null
+    "clientId": "client3"
   },
   {
     "logId": "log19",
@@ -206,7 +206,7 @@
     "processingTimeMs": 120,
     "eventType": "SUCCESS",
     "traceId": "trace10",
-    "clientId": null
+    "clientId": "client1"
   },
   {
     "logId": "log20",
@@ -217,7 +217,7 @@
     "processingTimeMs": 80,
     "eventType": "INFO",
     "traceId": "trace10",
-    "clientId": null
+    "clientId": "client1"
   },
   {
     "logId": "log21",
@@ -228,7 +228,7 @@
     "processingTimeMs": 70,
     "eventType": "INFO",
     "traceId": "trace11",
-    "clientId": null
+    "clientId": "client2"
   },
   {
     "logId": "log22",
@@ -239,7 +239,7 @@
     "processingTimeMs": 40,
     "eventType": "INFO",
     "traceId": "trace11",
-    "clientId": null
+    "clientId": "client2"
   },
   {
     "logId": "log23",
@@ -250,7 +250,7 @@
     "processingTimeMs": 90,
     "eventType": "INFO",
     "traceId": "trace12",
-    "clientId": null
+    "clientId": "client3"
   },
   {
     "logId": "log24",
@@ -261,7 +261,7 @@
     "processingTimeMs": 110,
     "eventType": "SUCCESS",
     "traceId": "trace12",
-    "clientId": null
+    "clientId": "client3"
   },
   {
     "logId": "log25",
@@ -272,7 +272,7 @@
     "processingTimeMs": 120,
     "eventType": "INFO",
     "traceId": "trace13",
-    "clientId": null
+    "clientId": "client1"
   },
   {
     "logId": "log26",
@@ -283,7 +283,7 @@
     "processingTimeMs": 50,
     "eventType": "INFO",
     "traceId": "trace14",
-    "clientId": null
+    "clientId": "client2"
   },
   {
     "logId": "log27",
@@ -294,7 +294,7 @@
     "processingTimeMs": 40,
     "eventType": "SUCCESS",
     "traceId": "trace14",
-    "clientId": null
+    "clientId": "client2"
   },
   {
     "logId": "log28",
@@ -305,7 +305,7 @@
     "processingTimeMs": 70,
     "eventType": "SUCCESS",
     "traceId": "trace15",
-    "clientId": null
+    "clientId": "client3"
   },
   {
     "logId": "log29",
@@ -316,6 +316,6 @@
     "processingTimeMs": 80,
     "eventType": "SUCCESS",
     "traceId": "trace15",
-    "clientId": null
+    "clientId": "client3"
   }
 ]
