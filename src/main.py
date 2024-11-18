@@ -23,14 +23,14 @@ def test_pipeline(config_path, hour):
 
     # Run the Batch TLB task
     print("Running Batch TLB...")
-    user_exp_file = f"../data/user_experience/{hour}.json"
-    trace_file = f"../output/trace_processed/{hour}.json"
-    log_file = f"../output/log_processed/{hour}.json"
+    user_exp_file = f"../data/user_exp_{hour}.json"
+    trace_file = f"../output/trace_processed_{hour}.json"
+    log_file = f"../output/log_processed_{hour}.json"
     output_file = f"../output/tlb_metrics/{hour}.json"
 
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
-    batch_tlb = BatchTLB(user_exp_file, trace_file, log_file)
-    batch_tlb.compute_metrics(output_file)
+    batch_tlb = BatchTLB(user_exp_file, trace_file, log_file, output_file)
+    batch_tlb.compute_metrics()
     print(f"Batch TLB metrics written to: {output_file}")
 
 

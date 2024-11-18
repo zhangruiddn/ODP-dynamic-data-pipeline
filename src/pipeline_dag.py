@@ -47,15 +47,16 @@ def run_stage(stage_name, hour, **kwargs):
 
 # Task for computing metrics
 def compute_metrics(hour, **kwargs):
-    # These paths should be read from the pipeline config
-    user_exp_file = f"../data/user_experience/{hour}.json"
-    trace_file = f"../output/trace_processed/{hour}.json"
-    log_file = f"../output/log_processed/{hour}.json"
+    # TODO: These paths should be read from the pipeline config
+    user_exp_file = f"../data/user_exp_{hour}.json"
+    trace_file = f"../output/trace_processed_{hour}.json"
+    log_file = f"../output/log_processed_{hour}.json"
     output_file = f"../output/tlb_metrics/{hour}.json"
 
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
-    batch_tlb = BatchTLB(user_exp_file, trace_file, log_file)
-    batch_tlb.compute_metrics(output_file)
+    batch_tlb = BatchTLB(user_exp_file, trace_file, log_file, output_file)
+    batch_tlb.compute_metrics()
+    print(f"Batch TLB metrics written to: {output_file}")
 
 
 # HttpSensor for checking trace and log file availability
@@ -90,28 +91,28 @@ log_file_sensor = HttpSensor(
 stage_1_task = PythonOperator(
     task_id='process_eco_stream',
     python_callable=run_stage,
-    op_kwargs={'stage_name': 'stage_1', 'hour': '{{ ds_nodash }}'},
+    op_kwargs={'stage_name': 'stage_1', 'hour': '2024111612'},  # in production use {{ ds_nodash }}
     dag=dag,
 )
 
 stage_2_task = PythonOperator(
     task_id='process_trace_batch',
     python_callable=run_stage,
-    op_kwargs={'stage_name': 'stage_2', 'hour': '{{ ds_nodash }}'},
+    op_kwargs={'stage_name': 'stage_2', 'hour': '2024111612'},  # in production use {{ ds_nodash }}
     dag=dag,
 )
 
 stage_3_task = PythonOperator(
     task_id='process_log_batch',
     python_callable=run_stage,
-    op_kwargs={'stage_name': 'stage_3', 'hour': '{{ ds_nodash }}'},
+    op_kwargs={'stage_name': 'stage_3', 'hour': '2024111612'},  # in production use {{ ds_nodash }}
     dag=dag,
 )
 
 batch_tlb_task = PythonOperator(
     task_id='compute_batch_tlb',
     python_callable=compute_metrics,
-    op_kwargs={'hour': '{{ ds_nodash }}'},
+    op_kwargs={'hour': '2024111612'},  # in production use {{ ds_nodash }}
     dag=dag,
 )
 

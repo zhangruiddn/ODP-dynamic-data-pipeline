@@ -2,6 +2,10 @@ import json
 from collections import defaultdict
 from datetime import datetime
 
+"""
+This is a mock of TLB. Currently TLB cannot accept multiple batch input files from different sources.
+For demo purpose, we have coded up the metric logic.
+"""
 class BatchTLB:
     def __init__(self, user_exp_file, trace_file, log_file, output_file):
         self.user_exp_file = user_exp_file
@@ -33,36 +37,44 @@ class BatchTLB:
         # Initialize result storage
         client_metrics = defaultdict(lambda: {"page_view_time": 0, "retry_count": 0, "timeout_count": 0, "error_count": 0})
 
-        # Compute metrics for each user event
+        # Group user experience events by clientId
+        grouped_events = defaultdict(list)
         for event in user_exp_data:
-            client_id = event["clientId"]
-            trace_id = event["traceId"]
-            event_type = event["eventType"]
+            grouped_events[event["clientId"]].append(event)
 
-            # Process page view time
-            if event_type == "page_view_start":
-                start_time = datetime.fromisoformat(event["timestamp"])
-                end_event = next(
-                    (e for e in user_exp_data if e["clientId"] == client_id and e["traceId"] == trace_id and e["eventType"] == "page_view_end"),
-                    None
-                )
-                if end_event:
-                    end_time = datetime.fromisoformat(end_event["timestamp"])
-                    page_view_time = (end_time - start_time).total_seconds()
+        # Compute metrics for each client
+        for client_id, events in grouped_events.items():
+            # Sort events by timestamp
+            events.sort(key=lambda e: datetime.fromisoformat(e["timestamp"]))
+
+            # Track start and end events for page view time
+            last_start_time = None
+
+            for event in events:
+                event_type = event["eventType"]
+                timestamp = datetime.fromisoformat(event["timestamp"])
+
+                if event_type == "page_view_start":
+                    last_start_time = timestamp
+                elif event_type == "page_view_end" and last_start_time:
+                    page_view_time = (timestamp - last_start_time).total_seconds()
                     client_metrics[client_id]["page_view_time"] += page_view_time
+                    last_start_time = None  # Reset after processing the pair
 
-            # Process logs associated with the trace
-            if trace_id in trace_to_spans:
-                span_ids = trace_to_spans[trace_id]
-                for span_id in span_ids:
-                    if span_id in logs_by_span:
-                        for log in logs_by_span[span_id]:
-                            if log["eventType"] == "RETRY":
-                                client_metrics[client_id]["retry_count"] += 1
-                            elif log["eventType"] == "TIMEOUT":
-                                client_metrics[client_id]["timeout_count"] += 1
-                            elif log["eventType"] == "ERROR":
-                                client_metrics[client_id]["error_count"] += 1
+            # Process logs associated with the client
+            for event in events:
+                trace_id = event.get("traceId")
+                if trace_id and trace_id in trace_to_spans:
+                    span_ids = trace_to_spans[trace_id]
+                    for span_id in span_ids:
+                        if span_id in logs_by_span:
+                            for log in logs_by_span[span_id]:
+                                if log["eventType"] == "RETRY":
+                                    client_metrics[client_id]["retry_count"] += 1
+                                elif log["eventType"] == "TIMEOUT":
+                                    client_metrics[client_id]["timeout_count"] += 1
+                                elif log["eventType"] == "ERROR":
+                                    client_metrics[client_id]["error_count"] += 1
 
         # Write the result to the output file
         with open(self.output_file, 'w') as f:

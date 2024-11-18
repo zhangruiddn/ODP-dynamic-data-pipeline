@@ -25,7 +25,6 @@ class DataProcessor:
             read_key_prefix = stage['redis_mappings']['read']['redis_key_prefix']
             mappings = self._read_redis_mappings(read_key_prefix)
             mapping_key_field = stage['redis_mappings']['read'].get('key_field')
-            print("mappings is ", mappings)
             self._enhance_data_with_mappings(data, mappings, mapping_key_field)
 
         if 'write' in stage['redis_mappings']:
